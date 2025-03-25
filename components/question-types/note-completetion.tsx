@@ -2,9 +2,11 @@
 import React from 'react'
 import { data } from '@/lib/data'
 import { useAnswers } from '@/store/answers'
+import { useActiveQuestion } from '@/store/active-question'
 
 const NoteCompletion = () => {
   const { answers, changeAnswer } = useAnswers() // Use Zustand store
+  const { activeQuestion, setActiveQuestion } = useActiveQuestion()
 
   return (
     <div className="my-4">
@@ -31,9 +33,14 @@ const NoteCompletion = () => {
                   (data.passage1.noteCompletion?.quantity ?? 0) + i
                 }`}
                 value={answers[questionKey] || ''} // Fetch stored answer from Zustand
-                onChange={(e) =>
-                  changeAnswer && changeAnswer(questionKey, e.target.value)
-                } // Update Zustand store
+                onChange={(e) => {
+                  if (changeAnswer) {
+                    changeAnswer(questionKey, e.target.value)
+                  }
+                }} // Update Zustand store
+                onClick={() => {
+                  setActiveQuestion(i + 7)
+                }}
               />{' '}
               {item.text2}
             </li>

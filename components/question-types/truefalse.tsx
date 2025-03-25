@@ -2,13 +2,14 @@
 import React from 'react'
 import { data } from '@/lib/data' // Ensure correct path to the data file
 import { useAnswers } from '@/store/answers'
+import { useActiveQuestion } from '@/store/active-question'
 
 const TrueFalseQuiz = () => {
   const { answers, changeAnswer } = useAnswers() // Use Zustand store
   console.log(answers)
 
   if (!changeAnswer) {
-    throw new Error('changeAnswer is undefined');
+    throw new Error('changeAnswer is undefined')
   }
 
   const options = [
@@ -22,6 +23,8 @@ const TrueFalseQuiz = () => {
   const handleSelect = (questionId: number, value: string) => {
     changeAnswer(`answer${questionId}`, value) // Update Zustand store
   }
+
+  const { activeQuestion, setActiveQuestion } = useActiveQuestion()
 
   return (
     <div className="pr-4">
@@ -38,10 +41,16 @@ const TrueFalseQuiz = () => {
         this.
       </p>
 
-      {questions.map((question) => (
+      {questions.map((question, i) => (
         <section key={question.questionNumber} className="pt-4">
           <p>
-            <span className="py-1 px-2 border-[2px] rounded-sm border-white mr-1">
+            <span
+              className={`py-1 px-2 border-[2px] rounded-sm mr-1 ${
+                question.questionNumber == activeQuestion
+                  ? 'border-blue'
+                  : 'border-white'
+              }`}
+            >
               {question.questionNumber}
             </span>
             <span>{question.question}</span>
@@ -55,9 +64,10 @@ const TrueFalseQuiz = () => {
                     ? 'bg-blue-bright'
                     : ''
                 }`}
-                onClick={() =>
+                onClick={() => {
                   handleSelect(question.questionNumber, option.value)
-                }
+                  setActiveQuestion(question.questionNumber)
+                }}
               >
                 <input
                   type="radio"

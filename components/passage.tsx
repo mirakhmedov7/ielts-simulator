@@ -1,8 +1,12 @@
+'use client'
 import React from 'react'
 import Truefalse from './question-types/truefalse'
 import NoteCompletetion from './question-types/note-completetion'
+import { useActiveQuestion } from '@/store/active-question'
 
 const Passage = () => {
+  const { activeQuestion } = useActiveQuestion()
+  console.log(activeQuestion)
   return (
     <main className="flex p-4">
       <section
