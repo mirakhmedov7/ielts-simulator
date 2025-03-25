@@ -2,4 +2,40 @@
 
 body {
   font-family: Arial, sans-serif;
+  @apply text-lg;
+}
+
+@theme {
+  --color-blue: #418ec8;
+  --color-blue-bright: #bcd8f0;
+  --color-grey-dark: #999999;
+  --color-grey-bright: #d7d7d7;
+  --color-grey: #333333;
+  --color-grey-hover: #efefef;
+  --color-grey-border: #c1c1c1;
+  --color-green: #368e13;
+}
+
+::-webkit-scrollbar {
+  /* width: 20px; */
+  height: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: white;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--color-grey-dark);
+  border-radius: 0px;
+  height: 10px;
+}
+
+::-webkit-input-placeholder {
+  text-align: center;
+  font-weight: 700;
+  color: black;
+  font-size: 16px;
 }
